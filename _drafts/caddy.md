@@ -6,7 +6,7 @@ categories: tips
 author: Jim
 ---
 ## What?
-I have a lot of self-hosted Docker services, some of which I wanted to be available externally and some I wanted to be private. I also wanted nice easy to remember subdomains for each service but I didn't necessarily want all of these to also be available on the public internet. I had previously used [Cloudflare Zero Trust](https://developers.cloudflare.com/cloudflare-one/applications/configure-apps/) to access some of these which worked but that needed me to sign-in every so often as well as do all the Cloudflare DNS and Tunnels set-up each time I wanted something new, whilst this wasn't difficult it was time-consuming and a bit disjointed. I thought there must be a better way and I realised I had most of the constituent parts already set-up.  
+I have a lot of self-hosted Docker services, some of which I wanted to be available externally and some I wanted to be private. I also wanted nice easy to remember subdomains for each service but I didn't want all of them to also be available on the public internet. Previously I had been using [Cloudflare Zero Trust](https://developers.cloudflare.com/cloudflare-one/applications/configure-apps/) to access some of these which required a logon to access but this needed me to sign-in every so often as well as do all the Cloudflare DNS and Tunnels set-up each time I wanted to add a new service, whilst this wasn't difficult it was time-consuming and disjointed. I thought there must be a better way and after giving it some thought I realised I had most of the constituent parts already set-up.  
 
 ### Pre-requisites:  
 1) A domain  
@@ -18,7 +18,7 @@ I have a lot of self-hosted Docker services, some of which I wanted to be availa
 You can choose to use something that wouldn't exist on the internet like `mycooldomain.localhost` but I would recommend purchasing your own domain name.  
 
 ## AdGuard Home  
-There are lots of guides and articles on getting this installed and set-up, in my case I have it running on a Raspberry Pi 2 and Pi3 at home and also running externally on an Oracle Cloud free server with the excellent [adguardhome-sync](https://github.com/bakito/adguardhome-sync) running to keep them all in sync. We'll return to the AdGuard Home settings further down....  
+There are lots of guides and articles on getting this installed and set-up, in my case I have it running on a Raspberry Pi 2 and Pi 3 at home as well as running externally on an Oracle Cloud server with the excellent [adguardhome-sync](https://github.com/bakito/adguardhome-sync) running to keep them all in sync. We'll return to the AdGuard Home settings further down....  
   
 ## Tailscale  
 I love Tailscale, there's a nice explainer [here](https://www.caseyliss.com/2024/3/27/tailscale) extolling the virtues which says it better than I can and saves me having to say all the same stuff. The two important things to set-up are:
@@ -26,7 +26,7 @@ I love Tailscale, there's a nice explainer [here](https://www.caseyliss.com/2024
 2) MagicDNS must be enabled and the tailscale IPs of the AdGuard Home servers must be entered as Global nameservers on the [DNS settings page](https://login.tailscale.com/admin/dns). That way all tailscale traffic will use your AdGuard servers for DNS.  
 
 ## Caddy  
-This was the part I struggled the most with, I am no stranger to reverse proxies but I couldn't get Caddy working at all when run in Docker on my Synology, this is because by default the built-in nginx server is capturing 80 and 443 for Synology services so although I could start it up OK I wasn't able to get certs or properly test the webserver. In the end I found a guide and script [here](https://www.smarthomebeginner.com/free-ports-80-and-443-on-synology/) which managed to get me past this blocker[^1]. I chose to use [this Docker image](https://github.com/IAreKyleW00t/docker-caddy-cloudflare) as it had already been built with the Cloudflare DNS plugin I wanted. Once that was all done I created a Caddyfile that looked like this:  
+This was the part I struggled the most with, I am no stranger to reverse proxies but I couldn't get Caddy working at all when run in Docker on my Synology, this is because by default the Synology runs a built-in nginx server which is capturing 80 and 443 for Synology services.  Although I could start Caddy up OK I wasn't able to get certs or properly test the webserver. In the end I found a guide and script [here](https://www.smarthomebeginner.com/free-ports-80-and-443-on-synology/) which managed to get me past this blocker[^1]. I chose to use [this Docker image](https://github.com/IAreKyleW00t/docker-caddy-cloudflare) as it had already been built with the Cloudflare DNS plugin I wanted. Once that was all done I created a Caddyfile that looked like this:  
 
 ```
 {
@@ -40,8 +40,9 @@ subdomain.mydomain.com {
 
 Almost there....   
 
-a) Back to AdGuard Home: you need to create a DNS rewrite entry pointing your base domain (e.g. mycooldomain.com) from step 1) to the IP of where Caddy is running.   
-b) Start/restart Caddy, so long as you got the syntax right it should automatically obtain a cert and begin serving your service originally running at http://192.168.1.2:3001 as subdomain.mydomain.com.  
+a) Set-up a port-forward on your router to send port 80 to the server that's running Caddy (in my cae it was my Synology). That way Caddy can deal with all the DNS challenges for certificates.    
+b) Back to AdGuard Home: you need to create a DNS rewrite entry pointing the base domain (e.g. mycooldomain.com) from step 1) to the IP of where Caddy is running.  
+c) Start, or restart Caddy, if all has worked as planned it should automatically obtain a cert and begin serving your service originally running at http://192.168.1.2:3001 as subdomain.mydomain.com.  
 
 Now the clever part, because of the fact you also carried out the Tailscale setup this means that no matter where you are in the world, when you are connected to Tailscale you can always access your home services via your own domain name without needing to expose them to the internet. Tailscale does offer this service with their own "random" domains e.g. cat-crocodile.ts.net however I found using my own domain name to be a nicer experience.     
 

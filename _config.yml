@@ -21,7 +21,7 @@
 title: The lnlyssg blog
 description: Random posts that are too long for elsewhere
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://blog.racf.guru" # the base hostname & protocol for your site, e.g. http://example.com
 github_username:  lnlyssg
 
 remote_theme: pages-themes/cayman@v0.2.0
