@@ -7,6 +7,8 @@ author: Jim
 ---
 A couple of years ago Knog brought out the [Scout](https://www.knog.com/products/scout) bike tracker. I duly bought a couple to fit to my best bike and my eldest's bike. Apart from the odd recharge every few months everything has been good since then but alas we had to use it in anger this week after the eldest's bike was stolen.... It was locked up outside a family member's house on a fairly quiet city street, it was there for roughly 30 mins before being taken. After we realised the bike was gone they immediately opened Find My and could see the bike's location at a block of flats about a mile away. The police were called who advised to go there then call them again so someone could meet us and then we could try and locate it/get it back (although I'm skeptical if this would have actually happened.) However after getting off the phone the bike had moved about a mile further away and was now showing as inside a shop on an industrial estate.... we duly headed straight to the shop but by the time we got there the last update was now about 30 mins old and we couldn't see any sign of the bike. We had a look around the area but came home empty-handed.  
 
+![Find My](/assets/findmy.jpg)
+
 As I write this it's the day after and the same location is still showing so my working theory is that the below chain of events took place:  
 
 * Thief takes bike, cycles it back to their flat  
