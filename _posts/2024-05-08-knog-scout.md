@@ -15,6 +15,6 @@ As I write this it's the day after and the same location is still showing so my 
 * Approximately 15 mins after taking it, the thief gets an [unknown item alert](https://support.apple.com/en-gb/119874), at about this time is when we first realise the bike is gone and spot the location on Find My  
 * The thief panics and immediately turns off/leaves their phone at home and cycles away from their flat  
 * On the way to dispose of the bike the Scout is seen by someone's iPhone in the shop on the industrial estate  
-* Thief wither throws the bike into the river or realises where the Scout is and pries it off with a screwdriver and no more updates are received  
+* Thief either throws the bike into the river or realises where the Scout is and pries it off with a screwdriver and no more updates are received  
 
 When I bought the Scout the "unknown item" AirTag alert would only pop-up after a number of hours but due to the various stalking issues widely reported in the media Apple has now decreased this alert to a mere 15 minutes and as a result it makes the Scout far less effective if you hope to recover your bike. Unfortunately my eldest had not enabled the [alarm](https://youtu.be/s6wIHnOhaPg?feature=shared&t=604) at the time of the theft, I suspect that _could_ have made them ditch it immediately and we would have had more chance of recovering it but it's hard to say for sure. I think I would still recommend a Scout if asked but only if you are vigilant enough to also enable the alarm whenever you leave your bike anywhere.  
